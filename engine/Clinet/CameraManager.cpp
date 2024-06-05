@@ -16,7 +16,7 @@ Matrix CameraManager::S_MatProjection;
 
 void CameraManager::Clear()
 {
-   
+
 }
 
 void CameraManager::Init()
@@ -27,17 +27,15 @@ void CameraManager::Init()
     GetWindowRect(GetForegroundWindow(), &_rect);
     _centerScreen = { (_rect.right + _rect.left) / 2, (_rect.bottom + _rect.top) / 2 };
     _mousePos = _centerScreen;
-
-
+    _cameraLook = vec3(0, 1.0f, 1.0f);
+    _cameraUp = vec3(0, 1.0f, 0);
 }
 
 void CameraManager::Update()
 {
     MouseUpdate();
 
- 
-
- /*   S_MatView = DirectX::XMMatrixLookToLH(cameraPos, cameraLook, cameraUp);*/
+    S_MatView = DirectX::XMMatrixLookToLH(_cameraPos, _cameraLook, _cameraUp);
 
     if (_type == PROJECTION_TYPE::PERSPECTIVE)
         S_MatProjection = ::XMMatrixPerspectiveFovLH(_fov, _width / _height, _near, _far);
@@ -49,7 +47,7 @@ void CameraManager::Update()
 }
 
 void CameraManager::MouseUpdate()
-{ 
+{
 
     _mousePos = KeyManager::GetInstance()->GetMousePos();
 
@@ -63,6 +61,13 @@ void CameraManager::MouseUpdate()
 
     if (_cameraPitch > 89.0f) _cameraPitch = 89.0f;
     if (_cameraPitch < -89.0f) _cameraPitch = -89.0f;
+
+    vec3 look = vec3(0, 0, 1.0f);
+    vec3 pos = vec3(0, 0, -50.0f);
+    Matrix  mat = Matrix::CreateRotationY(XMConvertToRadians(_cameraYaw));
+
+    _cameraLook = vec3::Transform(look, mat);
+    _cameraPos = vec3::Transform(pos, mat);
 
     SetCursorPos(_centerScreen.x, _centerScreen.y);
 }

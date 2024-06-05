@@ -205,7 +205,6 @@
     <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="Stage1.h" />
-    <ClInclude Include="SunScript.h" />
     <ClInclude Include="TableHeap.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
@@ -277,7 +276,6 @@
     <ClCompile Include="SimpleMath.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="Stage1.cpp" />
-    <ClCompile Include="SunScript.cpp" />
     <ClCompile Include="TableHeap.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeManager.cpp" />

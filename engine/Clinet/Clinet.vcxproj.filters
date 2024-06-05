@@ -166,9 +166,6 @@
     <ClInclude Include="Texture.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="SunScript.h">
-      <Filter>Contents\Scirpt</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts.h">
       <Filter>Resource\Component\Scripts</Filter>
     </ClInclude>
@@ -299,9 +296,6 @@
     </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="SunScript.cpp">
-      <Filter>Contents\Scirpt</Filter>
     </ClCompile>
     <ClCompile Include="Scripts.cpp">
       <Filter>Resource\Component\Scripts</Filter>

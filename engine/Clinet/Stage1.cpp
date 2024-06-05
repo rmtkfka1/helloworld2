@@ -13,7 +13,6 @@
 #include "Transform.h"
 #include "Model.h"
 #include "ConstantBuffer.h"
-#include "SunScript.h"
 #include "ImguiManager.h"
 #include "BoxCollider.h"
 #include "CollisonManager.h"
@@ -35,7 +34,19 @@ Stage1::~Stage1()
 void Stage1::Init()
 {
 	Super::Init();
+	CameraManager::GetInstance()->Init();
 
+	{
+
+		shared_ptr<GameObject> player = make_shared<GameObject>();
+
+		shared_ptr<Model> model = Model::ReadData(L"Tank/Tank");
+		player->SetModel(model);
+
+		shared_ptr<Transform> transform = make_shared<Transform>();
+		player->SetTransform(transform);
+		AddGameObject(player);
+	}
 
 
 
@@ -44,6 +55,7 @@ void Stage1::Init()
 void Stage1::Update()
 {
 	Super::Update();
+	CameraManager::GetInstance()->Update();
 }
 
 void Stage1::LateUpdate() 

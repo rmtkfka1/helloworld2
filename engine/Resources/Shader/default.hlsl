@@ -6,10 +6,14 @@ struct MaterialDesc
     float4 emissive;
 };
 
-cbuffer Lightinfo : register(b0)
+#define MAX_MODEL_TRANSFORMS 50
+
+
+
+
+cbuffer BoneBuffer : register(b0)
 {
-    float4 lightDirection;
-    float4 cameraPos;
+    row_major matrix BoneTransforms[MAX_MODEL_TRANSFORMS];
 };
 
 cbuffer TransformParams : register(b1)
@@ -29,7 +33,7 @@ cbuffer MATERIAL_PARAMS : register(b3)
 {
     int normal_on;
     int specular_on;
-    int int_2;
+    int boneIndex;
     int int_3;
 
     float float_0;
@@ -38,6 +42,7 @@ cbuffer MATERIAL_PARAMS : register(b3)
     float float_3;
 
 };
+
 
 Texture2D tex_0 : register(t0);
 Texture2D normal_texture : register(t1);
@@ -74,6 +79,7 @@ VS_OUT VS_Main(VS_IN input)
     VS_OUT output = (VS_OUT) 0;
 
     output.pos = float4(input.pos, 1.0f);
+
     output.pos = mul(output.pos, WorldMatrix);
     output.pos = mul(output.pos, ViewMatrix);
     output.pos = mul(output.pos, ProjectionMatrix);
@@ -91,41 +97,5 @@ float4 PS_Main(VS_OUT input) : SV_Target
 {
     float4 color = tex_0.Sample(sam_0, input.uv);
     
-    float3 normal = normalize(input.normal);
-    float3 lightDir = normalize(lightDirection.xyz);
-    
-    //≥Î∏ª∏≈«Œ
-    if (normal_on)
-    {
-        float3 tagentSpaceNormal = normal_texture.Sample(sam_0, input.uv).xyz;
-        
-        tagentSpaceNormal = (tagentSpaceNormal - 0.5f) * 2.f;
-    
-        float3x3 matTBN = { input.tangent, input.binormal, input.normal };
-    
-        normal = normalize(mul(tagentSpaceNormal, matTBN));
-    }
-    
-  
-    // µ«ª¡Ó ∆—≈Õ
-    float4 diffuseFactor = saturate(dot(normal, -lightDir)) * lightColor.diffuse * color;
-    
-    // æ⁄∫Òæ∆Æ ∆—≈Õ
-    float4 ambientFactor = lightColor.ambient * color;
-    
-    // Ω∫∆Â≈ß∑Ø ∆—≈Õ
-    float3 reflection = reflect(-lightDir, normal);
-    float3 viewDir = normalize(cameraPos.xyz - input.pos.xyz);
-    float specFactor = pow(saturate(dot(reflection, viewDir)), sh);
-    float4 specularFactor = specFactor * lightColor.specular;
-    
-    if (specular_on)
-    {
-        specularFactor *= specular_texture.Sample(sam_0, input.uv);
-    }
-    
-    // ∆—≈Õ ∞·«’
-    float4 totalColor = diffuseFactor + ambientFactor + specularFactor;
-    
-    return totalColor;
+    return color;
 }

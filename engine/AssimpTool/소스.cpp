@@ -5,9 +5,10 @@
 int main()
 {
 	Converter converter;
-	converter.ReadAssetFile(L"pressenter.fbx");
-	converter.ExportMaterialData(L"pressenter6/pressenter");
-	converter.ExportModelData(L"pressenter6/pressenter");
-	converter.Clear();
+	converter.ReadAssetFile(L"Tank/Tank.fbx");
+	converter.ExportMaterialData(L"Tank/Tank");
+	converter.ExportModelData(L"Tank/Tank");
+
+
 
 };

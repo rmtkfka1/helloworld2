@@ -3,8 +3,8 @@ class GameObject;
 
 enum class PROJECTION_TYPE
 {
-	PERSPECTIVE, 
-	ORTHOGRAPHIC, 
+	PERSPECTIVE,
+	ORTHOGRAPHIC,
 };
 
 
@@ -19,7 +19,6 @@ public:
 	}
 
 	void Clear();
-
 	void Init();
 	void Update();
 	void MouseUpdate();
@@ -37,6 +36,11 @@ public:
 	float _cameraPitch{};
 	POINT _centerScreen{};
 	POINT _mousePos{};
+
+public:
+	float _width{};
+	float _height{};
+
 private:
 
 	const float _cameraSpeed = 10.0f;
@@ -47,10 +51,11 @@ public:
 	static Matrix S_MatView;
 	static Matrix S_MatProjection;
 
+private:
+	vec3 _cameraPos{};
+	vec3 _cameraLook{};
+	vec3 _cameraUp{};
 
-public:
-	float _width{};
-	float _height{};
 
 };
 

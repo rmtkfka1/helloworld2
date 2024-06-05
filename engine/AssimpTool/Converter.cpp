@@ -81,17 +81,7 @@ void Converter::ReadModelData(aiNode* node, int32 index, int32 parent, DirectX::
 	bone->name = node->mName.C_Str();
 
 
-	Matrix m;
-	ai_real* temp = &node->mTransformation.a1;
-	float* mTemp = &m._11;
-
-	for (int t = 0; t < 16; ++t) {
-		mTemp[t] = float(temp[t]);
-	}
-
-	m = m.Transpose() * tr;
-
-	//·ç
+	
 	// Relative Transform
 	Matrix transform(node->mTransformation[0]);
 	bone->transform = transform.Transpose();
@@ -106,13 +96,13 @@ void Converter::ReadModelData(aiNode* node, int32 index, int32 parent, DirectX::
 
 	_bones.push_back(bone);
 
-	// Mesh
-	ReadMeshData(node, index, m);
 
-	// Àç±Í ÇÔ¼ö
+	ReadMeshData(node, index, bone->transform);
+
+
 	for (uint32 i = 0; i < node->mNumChildren; i++)
 	{
-		ReadModelData(node->mChildren[i], _bones.size(), index, m);
+		ReadModelData(node->mChildren[i], _bones.size(), index, bone->transform);
 
 	}
 
@@ -128,8 +118,6 @@ void Converter::ReadMeshData(aiNode* node, int32 bone, DirectX::SimpleMath::Matr
 	mesh->boneIndex = bone;
 
 
-
-
 	for (uint32 i = 0; i < node->mNumMeshes; i++)
 	{
 
@@ -139,6 +127,8 @@ void Converter::ReadMeshData(aiNode* node, int32 bone, DirectX::SimpleMath::Matr
 		// Material Name
 		const aiMaterial* material = _scene->mMaterials[srcMesh->mMaterialIndex];
 		mesh->materialName = material->GetName().C_Str();
+
+		const uint32 startVertex = mesh->vertices.size();
 
 		for (uint32 v = 0; v < srcMesh->mNumVertices; v++)
 		{
@@ -163,22 +153,20 @@ void Converter::ReadMeshData(aiNode* node, int32 bone, DirectX::SimpleMath::Matr
 
 		}
 
-
-		for (auto& v : mesh->vertices)
-		{
-			v.position = DirectX::SimpleMath::Vector3::Transform(v.position, m);
-		}
-
 		// Index
 		for (uint32 f = 0; f < srcMesh->mNumFaces; f++)
 		{
 			aiFace& face = srcMesh->mFaces[f];
 
 			for (uint32 k = 0; k < face.mNumIndices; k++)
-				mesh->indices.push_back(face.mIndices[k]);
+				mesh->indices.push_back(face.mIndices[k]+ startVertex);
 		}
 	}
 
+	for (auto& v : mesh->vertices)
+	{
+		v.position = DirectX::SimpleMath::Vector3::Transform(v.position, m);
+	}
 
 	_meshes.push_back(mesh);
 
