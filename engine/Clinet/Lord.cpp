@@ -8,6 +8,7 @@
 #include "Transform.h"
 #include "TableHeap.h"
 #include "Material.h"
+
 Lord::Lord()
 {
 }
@@ -24,11 +25,11 @@ void Lord::Init()
 	_data.resize(InstanceCount);
 
 	_buffer = make_shared<StructedBuffer>();
-	_buffer->Init(sizeof(InstanceData), InstanceCount);
+	_buffer->Init(sizeof(LordInstance::InstanceData), InstanceCount);
 
 	for (int i = 0; i < InstanceCount; ++i)
 	{
-		_data[i].worldmat = Matrix::CreateTranslation(vec3(0, 0, i*380));
+		_data[i].worldmat = Matrix::CreateTranslation(vec3(0, 0, i* _model->GetSize().z *2));
 	}
 
 	_buffer->PushData((_data.data()));

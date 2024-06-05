@@ -193,11 +193,11 @@
     <ClInclude Include="test.h">
       <Filter>Contents\Scirpt</Filter>
     </ClInclude>
-    <ClInclude Include="Lord.h">
-      <Filter>Contents\Object</Filter>
-    </ClInclude>
     <ClInclude Include="StructedBuffer.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Lord.h">
+      <Filter>Contents\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

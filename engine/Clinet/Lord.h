@@ -3,10 +3,13 @@
 
 class StructedBuffer;
 
-struct InstanceData
+namespace LordInstance
 {
-	Matrix worldmat;
-};
+	struct InstanceData
+	{
+		Matrix worldmat;
+	};
+}
 
 class Lord : public GameObject
 {
@@ -21,7 +24,7 @@ public:
 	virtual void Render() override;
 
 private:
-	vector<InstanceData> _data;
+	vector<LordInstance::InstanceData> _data;
 	shared_ptr<StructedBuffer> _buffer;
 	const int InstanceCount = 50;
 
