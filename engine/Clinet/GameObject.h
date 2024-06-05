@@ -33,6 +33,7 @@ public:
 	virtual void Init();
 	virtual void Update();
 	virtual void Render();
+	virtual void Render(uint32 instance, D3D12_VERTEX_BUFFER_VIEW view);
 
 	void SetTransform(shared_ptr<Transform> transform);
 	void SetMaterial(shared_ptr<Material> material) { _material = material; }

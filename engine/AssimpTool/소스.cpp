@@ -5,9 +5,10 @@
 int main()
 {
 	Converter converter;
-	converter.ReadAssetFile(L"Tank/Tank.fbx");
-	converter.ExportMaterialData(L"Tank/Tank");
-	converter.ExportModelData(L"Tank/Tank");
+	converter.ReadAssetFile(L"cutespaceship.fbx");
+	converter.ExportMaterialData(L"car/car");
+	converter.ExportModelData(L"car/car");
+
 
 
 

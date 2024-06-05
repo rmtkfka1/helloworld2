@@ -190,6 +190,15 @@
     <ClInclude Include="Game.h">
       <Filter>Resource</Filter>
     </ClInclude>
+    <ClInclude Include="test.h">
+      <Filter>Contents\Scirpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Lord.h">
+      <Filter>Contents\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="StructedBuffer.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -317,6 +326,15 @@
     </ClCompile>
     <ClCompile Include="SphereCollider.cpp">
       <Filter>Resource\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>Contents\Scirpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Lord.cpp">
+      <Filter>Contents\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="StructedBuffer.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -32,13 +32,13 @@ void Core::Init(WindowInfo info)
 	_rootSignautre->Init();
 
 	CreateConstantBuffer(CBV_REGISTER::b0, sizeof(Lightinfo), 1);
-	CreateConstantBuffer(CBV_REGISTER::b1, sizeof(TransformParams), 256);
-	CreateConstantBuffer(CBV_REGISTER::b2, sizeof(MaterialDesc), 256);
-	CreateConstantBuffer(CBV_REGISTER::b3, 20, 256);
+	CreateConstantBuffer(CBV_REGISTER::b1, sizeof(TransformParams), 3000);
+	CreateConstantBuffer(CBV_REGISTER::b2, sizeof(MaterialDesc), 3000);
+	CreateConstantBuffer(CBV_REGISTER::b3, 20, 3000);
 
 
 	_tableHeap = make_unique<TableHeap>();
-	_tableHeap->Init(256);
+	_tableHeap->Init(3000);
 
 	ImguiManager::GetInstance()->Init();
 	KeyManager::GetInstance()->Init(info.hwnd);

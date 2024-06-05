@@ -18,7 +18,8 @@
 #include "CollisonManager.h"
 #include "ObjectManager.h"
 #include "SphereCollider.h"
-
+#include "test.h"
+#include "Lord.h"
 Stage1::Stage1()
 {
 
@@ -33,22 +34,44 @@ Stage1::~Stage1()
 
 void Stage1::Init()
 {
-	Super::Init();
+
+
 	CameraManager::GetInstance()->Init();
 
 	{
 
+		shared_ptr<Lord> lord = make_shared<Lord>();
+
+		shared_ptr<Model> model = Model::ReadData(L"road/road");
+		lord->SetModel(model);
+
+		shared_ptr<Transform> transform = make_shared<Transform>();
+		lord->SetTransform(transform);
+		AddGameObject(lord);
+	}
+
+	{
 		shared_ptr<GameObject> player = make_shared<GameObject>();
 
-		shared_ptr<Model> model = Model::ReadData(L"Tank/Tank");
+		shared_ptr<Model> model = Model::ReadData(L"car/car");
 		player->SetModel(model);
 
 		shared_ptr<Transform> transform = make_shared<Transform>();
 		player->SetTransform(transform);
+		player->_transform->SetLocalScale(vec3(0.1f, 0.1f, 0.1f));
+		player->_transform->SetLocalPosition(vec3(-30.0f, 2.0f, 0));
+		player->_transform->SetLocalRotation(vec3(0, 180.0f, 0));
+		shared_ptr<BoxCollider> box = make_shared<BoxCollider>();
+		player->AddComponent(box);
+
+		shared_ptr<test> t = make_shared<test>();
+
+		player->AddComponent(t);
+
 		AddGameObject(player);
 	}
 
-
+	Super::Init();
 
 }
 

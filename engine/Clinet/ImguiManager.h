@@ -23,9 +23,8 @@ public:
 	void Render();
 
 public:
-	static int ObjectCount;
-	static int playerHp;
-	static int testing;
+	vec3 _temp{};
+
 
 
 

@@ -1,52 +1,52 @@
 
-cbuffer MATERIAL_PARAMS : register(b3)
+struct instanceData
 {
-    int int_0;
-    int int_1;
-    int int_2;
-    int int_3;
-    
-    float float_0;
-    float float_1;
-    float float_2;
-    float float_3;
+    row_major matrix InstnaceWorldMatrix;
 };
 
 struct VS_IN
 {
-    //메쉬 에서 공통 되게 갖고있는 정보들이다. (메쉬에서 꼽아주는정보들)
     float3 pos : POSITION;
-    
-    // 인스턴싱을 위해서 개별적으로 갖고있는 정보들이다.
-    row_major matrix matWorld : W;
-    row_major matrix matview : V;
-    row_major matrix matProjection : P;
-    
-    //인스턴스 아이디정보이다.
-    uint instanceID : SV_InstanceID;
+    float2 uv : TEXCOORD;
 };
 
 struct VS_OUT
 {
     float4 pos : SV_Position;
+    float2 uv : TEXCOORD;
+
+};
+    
+StructuredBuffer<instanceData> instanceInfo : register(t5);
+
+Texture2D tex_0 : register(t0);
+SamplerState sam_0 : register(s0);
+
+cbuffer TransformParams : register(b1)
+{
+    row_major matrix WorldMatrix;
+    row_major matrix ViewMatrix;
+    row_major matrix ProjectionMatrix;
 };
 
 
-VS_OUT VS_Main(VS_IN input)
+VS_OUT VS_Main(VS_IN input, uint nInstanceID :SV_InstanceID)
 {
     VS_OUT output = (VS_OUT) 0;
 
     output.pos = float4(input.pos, 1.0f);
-    output.pos = mul(output.pos, input.matWorld);
-    output.pos = mul(output.pos, input.matview);
-    output.pos = mul(output.pos, input.matProjection);
+    output.pos = mul(output.pos, instanceInfo[nInstanceID].InstnaceWorldMatrix);
+    output.pos = mul(output.pos, ViewMatrix);
+    output.pos = mul(output.pos, ProjectionMatrix);
   
-
+    output.uv = input.uv;
     return output;
   
 }
 
 float4 PS_Main(VS_OUT input) : SV_Target
 {
-    return float4(float_0, float_1, float_2, 1.0f);
+    float4 color = tex_0.Sample(sam_0, input.uv);
+    
+    return color;
 }

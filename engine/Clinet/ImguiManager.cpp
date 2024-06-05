@@ -2,9 +2,7 @@
 #include "ImguiManager.h"
 #include "Core.h"
 
-int ImguiManager::ObjectCount = 0;
-int ImguiManager::playerHp = 0;
-int ImguiManager::testing=0;
+
 ImguiManager::~ImguiManager()
 {
 	ImGui_ImplDX12_Shutdown();
@@ -54,9 +52,8 @@ void ImguiManager::Render()
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 
-		ImGui::Text("Object count: = %d", ObjectCount);
-		ImGui::Text("player hp: = %d", playerHp);
-		ImGui::Text("test : = %d", testing);
+		ImGui::Text("x: = %f,y: = %f,z: = %f", _temp.x, _temp.y ,_temp.z);
+		
 		ImGui::End();
 	}
 

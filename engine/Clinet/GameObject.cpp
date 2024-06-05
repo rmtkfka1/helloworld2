@@ -90,6 +90,35 @@ void GameObject::Render()
 
 }
 
+void GameObject::Render(uint32 instance ,D3D12_VERTEX_BUFFER_VIEW view )
+{
+
+	for (auto& compoent : _component)
+	{
+		compoent->Render();
+	}
+
+	vector<shared_ptr<ModelMesh>>& meshData = _model->GetMeshes();
+
+	for (auto& data : meshData)
+	{
+		core->GetCmdList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		D3D12_VERTEX_BUFFER_VIEW pVertexBufferViews[] = { data->meshes->GetVertexView(), view };
+		core->GetCmdList()->IASetVertexBuffers(0, _countof(pVertexBufferViews), pVertexBufferViews);
+		core->GetCmdList()->IASetIndexBuffer(&data->meshes->GetIndexView());
+
+		_transform->Update();
+
+		if (data->material)
+		{
+			data->material->Update();
+		}
+
+		core->GetTableHeap()->SetGraphicsRootDescriptorTable();
+		core->GetCmdList()->DrawIndexedInstanced(data->meshes->GetIndexCount(), instance, 0, 0, 0);
+	}
+}
+
 //COMPONET 이지만 따로관리 
 void GameObject::SetTransform(shared_ptr<Transform> transform)
 {
