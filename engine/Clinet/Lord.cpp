@@ -52,7 +52,6 @@ void Lord::Render()
 		compoent->Render();
 	}
 
-	core->GetCmdList()->SetGraphicsRootShaderResourceView(2, _buffer->GetGPUVirtualAddress());
 	vector<shared_ptr<ModelMesh>>& meshData = _model->GetMeshes();
 
 	for (auto& data : meshData)
@@ -69,6 +68,7 @@ void Lord::Render()
 			data->material->Update();
 		}
 
+		core->GetCmdList()->SetGraphicsRootShaderResourceView(2, _buffer->GetGPUVirtualAddress());
 		core->GetTableHeap()->SetGraphicsRootDescriptorTable();
 		core->GetCmdList()->DrawIndexedInstanced(data->meshes->GetIndexCount(), 100, 0, 0, 0);
 	}
