@@ -16,7 +16,7 @@
 #include "BoxCollider.h"
 #include "CollisonManager.h"
 #include "SphereCollider.h"
-
+#include "StructedBuffer.h"
 
 
 GameObject::GameObject()
@@ -90,7 +90,7 @@ void GameObject::Render()
 
 }
 
-void GameObject::Render(uint32 instance ,D3D12_VERTEX_BUFFER_VIEW view )
+void GameObject::Render(uint32 instance , shared_ptr<StructedBuffer> buffer)
 {
 
 	for (auto& compoent : _component)
@@ -103,7 +103,7 @@ void GameObject::Render(uint32 instance ,D3D12_VERTEX_BUFFER_VIEW view )
 	for (auto& data : meshData)
 	{
 		core->GetCmdList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		D3D12_VERTEX_BUFFER_VIEW pVertexBufferViews[] = { data->meshes->GetVertexView(), view };
+		D3D12_VERTEX_BUFFER_VIEW pVertexBufferViews[] = { data->meshes->GetVertexView(), buffer->GetBufferView()};
 		core->GetCmdList()->IASetVertexBuffers(0, _countof(pVertexBufferViews), pVertexBufferViews);
 		core->GetCmdList()->IASetIndexBuffer(&data->meshes->GetIndexView());
 
@@ -114,6 +114,7 @@ void GameObject::Render(uint32 instance ,D3D12_VERTEX_BUFFER_VIEW view )
 			data->material->Update();
 		}
 
+		buffer->SetGraphicsRootShaderResourceView();
 		core->GetTableHeap()->SetGraphicsRootDescriptorTable();
 		core->GetCmdList()->DrawIndexedInstanced(data->meshes->GetIndexCount(), instance, 0, 0, 0);
 	}

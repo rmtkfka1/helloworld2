@@ -8,6 +8,7 @@ public:
 	void Init(uint32 elementSize, uint32 elementCount);
 	void CreateBuffer();
 	void PushData(void* buffer);
+	void SetGraphicsRootShaderResourceView();
 
 	D3D12_VERTEX_BUFFER_VIEW& GetBufferView() { return _bufferView; }
 

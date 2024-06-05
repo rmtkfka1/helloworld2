@@ -22,17 +22,9 @@ public:
 
 private:
 	vector<InstanceData> _data;
+	shared_ptr<StructedBuffer> _buffer;
+	const int InstanceCount = 50;
 
-public:
-	void BufferInit(uint32 elementSize, uint32 elementCount);
-	void CreateBuffer();
-	void PushData();
 
-private:
-	ComPtr<ID3D12Resource>		_buffer;
-	D3D12_VERTEX_BUFFER_VIEW	_bufferView;
-
-	uint32 _elementSize{};
-	uint32 _elementCount{};
 };
 

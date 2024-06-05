@@ -40,6 +40,12 @@ void StructedBuffer::PushData(void* buffer)
 	_bufferView.BufferLocation = _buffer->GetGPUVirtualAddress();
 	_bufferView.StrideInBytes = _elementSize;
 	_bufferView.SizeInBytes = bufferSize;
+}
 
+void StructedBuffer::SetGraphicsRootShaderResourceView()
+{
 	core->GetCmdList()->SetGraphicsRootShaderResourceView(2, _buffer->GetGPUVirtualAddress());
 }
+
+
+
