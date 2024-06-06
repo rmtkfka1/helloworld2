@@ -31,7 +31,8 @@ struct LightParams
 {
 	LightInfo	LightInfos[100];
 	uint32		lightCount =0;
-	int			padding1{};
+	float		range = 30000.0f;
+	float		angle = 180.0f;
 	int			padding2{};
 	int			padding3{};
 };

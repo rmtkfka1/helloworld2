@@ -36,6 +36,7 @@ void Lamp::Init()
 	}
 
 	_buffer->PushData((_data.data()));
+
 	for (int i = 0; i < InstanceCount; ++i)
 	{
 		LightInfo info;
