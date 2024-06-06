@@ -1,16 +1,12 @@
 #pragma once
 #include "GameObject.h"
-
-class StructedBuffer;
-
-
-class Lord : public GameObject
+class Lamp :public GameObject
 {
 
 public:
 
-	Lord();
-	virtual ~Lord();
+	Lamp();
+	virtual ~Lamp();
 
 	virtual void Init() override;
 	virtual void Update() override;
@@ -19,7 +15,7 @@ public:
 private:
 	vector<InstanceData> _data;
 	shared_ptr<StructedBuffer> _buffer;
-	const int InstanceCount = 50;
+	const int InstanceCount = 40;
 
 };
 

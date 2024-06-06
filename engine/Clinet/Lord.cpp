@@ -25,7 +25,7 @@ void Lord::Init()
 	_data.resize(InstanceCount);
 
 	_buffer = make_shared<StructedBuffer>();
-	_buffer->Init(sizeof(LordInstance::InstanceData), InstanceCount);
+	_buffer->Init(sizeof(InstanceData), InstanceCount);
 
 	for (int i = 0; i < InstanceCount; ++i)
 	{

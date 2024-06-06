@@ -147,3 +147,8 @@ enum
 };
 
 extern unique_ptr<class Core> core;
+
+struct InstanceData
+{
+	Matrix worldmat;
+};
