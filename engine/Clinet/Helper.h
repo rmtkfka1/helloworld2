@@ -6,5 +6,6 @@ public:
 
 	static wstring ToWString(string value);
 	static string ToString(wstring value);
+	static vec3 GetAttenuationCoeff(float distance);
 };
 

@@ -3,6 +3,7 @@
 #include "StructedBuffer.h"
 #include "LightManager.h"
 #include "Model.h"
+#include "Helper.h"
 Lamp::Lamp()
 {
 }
@@ -39,17 +40,17 @@ void Lamp::Init()
 	{
 		LightInfo info;
 		info.position.x = _data[i].worldmat.Translation().x;
-		info.position.y = _data[i].worldmat.Translation().y;
+		info.position.y = _data[i].worldmat.Translation().y +65.0f;
 		info.position.z = _data[i].worldmat.Translation().z;
 		info.lightType = static_cast<int32>(LIGHT_TYPE::POINT_LIGHT);
-		info.range = 300.0f;
+		info.attenuation = Helper::GetAttenuationCoeff(4000.0f);
 		LightManager::GetInstnace()->PushLight(info);
 	}
 
-	//LightInfo info;
-	//info.direction = vec4(0, -1.0f, -1.0f, 0);
-	//info.lightType = static_cast<int32>(LIGHT_TYPE::DIRECTIONAL_LIGHT);
-	//LightManager::GetInstnace()->PushLight(info);
+	LightInfo info;
+	info.direction = vec4(0, -1.0f, 0, 0);
+	info.lightType = static_cast<int32>(LIGHT_TYPE::DIRECTIONAL_LIGHT);
+	LightManager::GetInstnace()->PushLight(info);
 
 }
 

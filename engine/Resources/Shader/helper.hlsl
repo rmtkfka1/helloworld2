@@ -7,46 +7,59 @@ LightColor CalculateLightColor(int lightIndex, float3 normal, float3 worldPos)
 {
     LightColor color = (LightColor) 0.f;
     
-    float diffuseRatio = 0.f;
-    float specularRatio = 0.f;
-    float distanceRatio = 1.f;
-    float3 LightDir = (float3) 0.f;
+
     if(g_light[lightIndex].lightType==0)
     {
-        //// Directional Light
-        //color.ambient = g_light[lightIndex].lightColor.ambient;
+        float Power = 0.1f;
+        // Directional Light
+        color.ambient = g_light[lightIndex].lightColor.ambient;
         
-        //float3 lightDir = normalize(-g_light[lightIndex].direction);
+        float3 lightDir = normalize(-g_light[lightIndex].direction);
         
-        //color.diffuse = g_light[lightIndex].lightColor.diffuse * saturate(dot(lightDir, normal));
-        //float3 viewDir = normalize(cameraPos.xyz - worldPos);
-        //float3 reflectDir = reflect(-lightDir, normal);
-        //float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 500.0f); 
-        //float specularPower = 0.0f;
-        //color.specular =  spec * g_light[lightIndex].lightColor.specular;
+        color.diffuse = g_light[lightIndex].lightColor.diffuse * saturate(dot(lightDir, normal));
+        float3 viewDir = normalize(cameraPos.xyz - worldPos);
+        float3 reflectDir = reflect(-lightDir, normal);
+        float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 500.0f);
+        float specularPower = 0.0f;
+        color.specular = spec * g_light[lightIndex].lightColor.specular;
         
+        color.diffuse *= Power;
+        color.ambient *= Power;
+        color.specular *= Power;
     }
     
     else if (g_light[lightIndex].lightType == 1)
     {
         //PointLight
-        LightDir = normalize(worldPos - g_light[lightIndex].position.xyz);
-        diffuseRatio = saturate(dot(-LightDir, normal));
-
-        float dist = distance(worldPos, g_light[lightIndex].position.xyz);
-        if (g_light[lightIndex].range == 0.f)
-            distanceRatio = 0.f;
-        else
-            distanceRatio = saturate(1.f - pow(dist / g_light[lightIndex].range, 2));
+       
+        float dist = length(g_light[lightIndex].position.xyz - worldPos);
+        float3 distPoly = float3(1.0, dist, dist * dist);
+        
+        float attenuation = 1.0 / dot(distPoly, g_light[lightIndex].attenuation);
+        
+        color.ambient = g_light[lightIndex].lightColor.ambient;
+        
+        float3 lightDir = normalize(g_light[lightIndex].position.xyz - worldPos);
+        
+        color.diffuse = g_light[lightIndex].lightColor.diffuse * saturate(dot(lightDir, normal));
         
         
+        float3 viewDir = normalize(cameraPos.xyz - worldPos);
+        float3 reflectDir = reflect(-lightDir, normal);
+        float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 500.0f);
+        float specularPower = 0.0f;
+        
+        color.specular = specularPower*  spec * g_light[lightIndex].lightColor.specular;
+        
+        color.diffuse *= attenuation;
+        color.ambient *= attenuation;
+        color.specular *= attenuation;
     }
     
- 
-    color.diffuse = g_light[lightIndex].lightColor.diffuse * diffuseRatio * distanceRatio;
+  
     return color;
+    
+    
 }
-
-
 
 #endif

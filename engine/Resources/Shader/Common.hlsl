@@ -22,18 +22,16 @@ struct LightInfo
     float4 position; //광원의 위치 [ 스폿라이트 , 포인트라이트 ] 
     float4 direction; // 광원의 방향 [ 스폿라이트 , 디렉션라이트 ]
     int lightType;
-    float range;
-    float angle;
-    int padding;
+    float3 attenuation;
 };
 
 cbuffer LightParams :register(b0)
 {
     LightInfo g_light[100];
     int g_lightCount;
-    int g_padding1;
-    int g_padding2;
-    int g_padding3;
+    int padding1;
+    int padding2;
+    int padding3;
 };
 cbuffer TransformParams : register(b1)
 {

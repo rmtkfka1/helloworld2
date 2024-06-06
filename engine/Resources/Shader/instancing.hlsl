@@ -62,7 +62,7 @@ float4 PS_Main(VS_OUT input) : SV_Target
         totalColor.specular += lightcolor.specular;
     }
     
-    color.xyz = (totalColor.diffuse.xyz * color.xyz); /* + (totalColor.ambient.xyz * color.xyz) + (totalColor.specular.xyz * color.xyz);*/
+    color.xyz = (totalColor.diffuse.xyz * color.xyz) + (totalColor.ambient.xyz * color.xyz) + (totalColor.specular.xyz * color.xyz);
     
     return color;
 }
