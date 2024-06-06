@@ -51,6 +51,7 @@ void Stage1::Init()
 		lord->SetTransform(transform);
 		lord->_transform->SetLocalPosition(vec3(-45.0f, 0, 0));
 		lord->_transform->SetLocalScale(vec3(0.05f, 0.05f, 0.05f));
+		lord->_transform->SetLocalRotation(vec3(0, 90.0f, 0));
 		AddGameObject(lord);
 	}
 

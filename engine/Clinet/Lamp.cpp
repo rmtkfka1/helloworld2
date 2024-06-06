@@ -4,6 +4,7 @@
 #include "LightManager.h"
 #include "Model.h"
 #include "Helper.h"
+#include "Transform.h"
 Lamp::Lamp()
 {
 }
@@ -24,40 +25,44 @@ void Lamp::Init()
 	for (int i = 0; i < 20; ++i)
 	{
 		_data[i].worldmat =
-			Matrix::CreateScale(0.03f, 0.03f, 0.03f) * Matrix::CreateTranslation(vec3(-45.0f, 15.0f, i * 1000));
+			Matrix::CreateScale(0.03f, 0.03f, 0.03f) * Matrix::CreateRotationY(XMConvertToRadians(180.0f)) * Matrix::CreateTranslation(vec3(-45.0f, 15.0f, i * 1000));
 	}
 
 	for (int i = 20; i < InstanceCount; ++i)
 	{
 		_data[i].worldmat =
-			Matrix::CreateScale(0.03f, 0.03f, 0.03f) * Matrix::CreateTranslation(vec3(45.0f, 15.0f, -(20-i)* 1000));
+			Matrix::CreateScale(0.03f, 0.03f, 0.03f) *
+			Matrix::CreateRotationY(XMConvertToRadians(180.0f)) * Matrix::CreateTranslation(vec3(45.0f, 15.0f, -(20-i)* 1000));
 	}
 
 	_buffer->PushData((_data.data()));
-
-
 	for (int i = 0; i < InstanceCount; ++i)
 	{
 		LightInfo info;
 		info.position.x = _data[i].worldmat.Translation().x;
-		info.position.y = _data[i].worldmat.Translation().y +65.0f;
-		info.position.z = _data[i].worldmat.Translation().z;
+		info.position.y = _data[i].worldmat.Translation().y +100.0f;
+		info.position.z = _data[i].worldmat.Translation().z ;
 		info.lightType = static_cast<int32>(LIGHT_TYPE::POINT_LIGHT);
-		info.attenuation = Helper::GetAttenuationCoeff(4000.0f);
+		info.attenuation = Helper::GetAttenuationCoeff(2000.0f);
 		LightManager::GetInstnace()->PushLight(info);
 	}
 
-	LightInfo info;
+	/*LightInfo info;
 	info.direction = vec4(0, -1.0f, 0, 0);
 	info.lightType = static_cast<int32>(LIGHT_TYPE::DIRECTIONAL_LIGHT);
-	LightManager::GetInstnace()->PushLight(info);
+	LightManager::GetInstnace()->PushLight(info);*/
 
 }
 
 void Lamp::Update()
 {
 	GameObject::Update();
+
+
+	static float _temp = 0;
+
 }
+
 
 void Lamp::Render()
 {
