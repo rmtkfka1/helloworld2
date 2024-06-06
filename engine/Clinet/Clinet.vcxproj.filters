@@ -208,6 +208,9 @@
     <ClInclude Include="Lamp.h">
       <Filter>Contents\Object</Filter>
     </ClInclude>
+    <ClInclude Include="LightManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -351,6 +354,9 @@
     <ClCompile Include="Lamp.cpp">
       <Filter>Contents\Object</Filter>
     </ClCompile>
+    <ClCompile Include="LightManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Clinet.rc">
@@ -391,6 +397,9 @@
       <Filter>Resource\ShaderFile</Filter>
     </FxCompile>
     <FxCompile Include="..\Resources\Shader\Common.hlsl">
+      <Filter>Resource\ShaderFile\Common</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\helper.hlsl">
       <Filter>Resource\ShaderFile\Common</Filter>
     </FxCompile>
   </ItemGroup>

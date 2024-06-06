@@ -1,13 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-enum class state
-{
-	one,
-	two,
-	three,
-	four
-};
+
 
 class Player : public GameObject
 {

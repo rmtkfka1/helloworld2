@@ -190,6 +190,7 @@
     <ClInclude Include="ImguiManager.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Lamp.h" />
+    <ClInclude Include="LightManager.h" />
     <ClInclude Include="Lord.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
@@ -262,6 +263,7 @@
     <ClCompile Include="ImguiManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Lamp.cpp" />
+    <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="Lord.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -320,6 +322,10 @@
       <FileType>Document</FileType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\helper.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>

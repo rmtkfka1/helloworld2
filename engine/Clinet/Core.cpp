@@ -9,6 +9,7 @@
 #include "CameraManager.h"
 #include "ObjectManager.h"
 #include "BoxCollider.h"
+#include "LightManager.h"
 void Core::Init(WindowInfo info)
 {
 	_info = info;
@@ -31,7 +32,7 @@ void Core::Init(WindowInfo info)
 	_rootSignautre = make_unique<RootSignature>();
 	_rootSignautre->Init();
 
-	CreateConstantBuffer(CBV_REGISTER::b0, sizeof(Lightinfo), 1);
+	CreateConstantBuffer(CBV_REGISTER::b0, sizeof(LightParams), 1);
 	CreateConstantBuffer(CBV_REGISTER::b1, sizeof(TransformParams), 3000);
 	CreateConstantBuffer(CBV_REGISTER::b2, sizeof(MaterialDesc), 3000);
 	CreateConstantBuffer(CBV_REGISTER::b3, 20, 3000);

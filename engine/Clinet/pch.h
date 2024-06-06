@@ -98,12 +98,7 @@ struct MaterialDesc
 	vec4 emissive = vec4(0.f, 0.f, 0.f, 1.f);
 };
 
-struct Lightinfo
-{
-	vec4 lightDirection;
-	vec4 cameraPos;
 
-};
 
 struct Vertex
 {
