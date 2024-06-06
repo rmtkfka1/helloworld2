@@ -51,7 +51,8 @@ public:
 	static Matrix S_MatView;
 	static Matrix S_MatProjection;
 
-private:
+	bool flag = false;
+public:
 	vec3 _cameraPos{};
 	vec3 _cameraLook{};
 	vec3 _cameraUp{};

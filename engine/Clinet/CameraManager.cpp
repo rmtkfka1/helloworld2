@@ -33,6 +33,15 @@ void CameraManager::Init()
 
 void CameraManager::Update()
 {
+    if (KeyManager::GetInstance()->GetButtonDown(KEY_TYPE::Q)) {
+        flag = !flag;
+    }
+
+    if (flag)
+    {
+        return;
+    }
+
     MouseUpdate();
 
     // 회전 행렬 생성 및 카메라 방향 벡터 업데이트
@@ -62,7 +71,6 @@ void CameraManager::Update()
     {
         _cameraPos -= _cameraRight * speed;
     }
-
 
     // 뷰 행렬 업데이트
     S_MatView = DirectX::XMMatrixLookToLH(_cameraPos, _cameraLook, _cameraUp);

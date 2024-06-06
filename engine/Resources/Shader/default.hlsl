@@ -3,6 +3,7 @@
 
 
 
+
 struct VS_IN
 {
     float3 pos : POSITION;
@@ -23,9 +24,7 @@ struct VS_OUT
 };
 
 
-//test ¿ë
-static float4 power = { 1.0f, 1.0f, 1.0f, 1.0f };
-static float sh = 14.0f;
+
 
 VS_OUT VS_Main(VS_IN input)
 {
@@ -49,5 +48,8 @@ float4 PS_Main(VS_OUT input) : SV_Target
 {
     float4 color = basic_texture.Sample(sam_0, input.uv);
     
-    return color;
+
+    
+    
+     return color;
 }

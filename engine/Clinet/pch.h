@@ -92,6 +92,7 @@ struct TransformParams
 
 struct MaterialDesc
 {
+	vec4 cameraPos;
 	vec4 ambient = vec4(0.f, 0.f, 0.f, 1.f);
 	vec4 diffuse = vec4(0.f, 0.f, 1.f, 1.f);
 	vec4 specular = vec4(0.f, 0.f, 0.f, 1.f);

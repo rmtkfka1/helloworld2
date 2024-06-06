@@ -22,6 +22,7 @@ public:
 	void Init();
 	void Render();
 
+
 public:
 	vec3 _temp{};
 

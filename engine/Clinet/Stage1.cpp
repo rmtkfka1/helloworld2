@@ -21,6 +21,7 @@
 #include "Lord.h"
 #include "Player.h"
 #include "Lamp.h"
+#include "LightManager.h"
 Stage1::Stage1()
 {
 
@@ -93,6 +94,7 @@ void Stage1::Init()
 
 void Stage1::Update()
 {
+
 	Super::Update();
 	CameraManager::GetInstance()->Update();
 }
@@ -107,6 +109,7 @@ void Stage1::LateUpdate()
 
 void Stage1::Render()
 {
+	LightManager::GetInstnace()->SetData();
 	Super::Render();
 }
 

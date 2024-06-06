@@ -18,6 +18,7 @@ struct LightColor
 
 struct LightInfo
 {
+    LightColor lightColor;
     float4 position; //광원의 위치 [ 스폿라이트 , 포인트라이트 ] 
     float4 direction; // 광원의 방향 [ 스폿라이트 , 디렉션라이트 ]
     int lightType;
@@ -26,10 +27,8 @@ struct LightInfo
     int padding;
 };
 
-
 cbuffer LightParams :register(b0)
 {
-    LightColor g_lightColor;
     LightInfo g_light[100];
     int g_lightCount;
     int g_padding1;

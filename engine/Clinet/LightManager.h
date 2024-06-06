@@ -9,31 +9,33 @@ enum class LIGHT_TYPE : uint8
 
 
 
-struct LightInfo
-{
-	vec4		position; //광원의 위치 [ 스폿라이트 , 포인트라이트 ] 
-	vec4		direction; // 광원의 방향 [ 스폿라이트 , 디렉션라이트 ]
-	int32		lightType;
-	float		range;
-	float		angle;
-	int32		padding;
-};
+
 
 struct LightColor
 {
-	vec4	diffuse;
-	vec4	ambient;
-	vec4	specular;
+	vec4	diffuse =vec4(0.1f,0.1f, 0.1f, 0.1f);
+	vec4	ambient = vec4(0.1f, 0.1f, 0.1f, 0.1f);
+	vec4	specular = vec4(1.0f, 0.647f, 0.0f, 1.0f);
+};
+
+struct LightInfo
+{
+	LightColor	color;
+	vec4		position; //광원의 위치 [ 스폿라이트 , 포인트라이트 ] 
+	vec4		direction; // 광원의 방향 [ 스폿라이트 , 디렉션라이트 ]
+	int32		lightType{};
+	float		range{};
+	float		angle{};
+	int32		padding{};
 };
 
 struct LightParams
 {
-	LightColor	color; 
 	LightInfo	LightInfos[100];
-	uint32		lightCount;
-	int32		padding1;
-	int32		padding2;
-	int32		padding3;
+	uint32		lightCount =0;
+	int32		padding1{};
+	int32		padding2{};
+	int32		padding3{};
 };
 
 class LightManager
@@ -49,7 +51,9 @@ public:
 	void PushLight(LightInfo info);
 	void SetData();
 
-private:
+	LightParams& GetParams() { return _lightParmas; }
+
+public:
 	LightParams _lightParmas;
 };
 

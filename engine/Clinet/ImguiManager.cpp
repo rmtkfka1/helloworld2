@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ImguiManager.h"
 #include "Core.h"
-
+#include "LightManager.h"
 
 ImguiManager::~ImguiManager()
 {
@@ -53,7 +53,34 @@ void ImguiManager::Render()
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 
 		ImGui::Text("x: = %f,y: = %f,z: = %f", _temp.x, _temp.y ,_temp.z);
+	
 		
+		if (ImGui::CollapsingHeader("light",ImGuiTreeNodeFlags_DefaultOpen))
+		{
+			{
+				float arr[3] = { LightManager::GetInstnace()->_lightParmas.LightInfos[0].direction.x,
+				LightManager::GetInstnace()->_lightParmas.LightInfos[0].direction.y,
+				LightManager::GetInstnace()->_lightParmas.LightInfos[0].direction.z };
+				ImGui::SliderFloat3("light Direction", arr, -1.0f, 1.0f, "x: = %f,y: = %f,z: = %f");
+				LightManager::GetInstnace()->_lightParmas.LightInfos[0].direction.x = arr[0];
+				LightManager::GetInstnace()->_lightParmas.LightInfos[0].direction.y = arr[1];
+				LightManager::GetInstnace()->_lightParmas.LightInfos[0].direction.z = arr[2];
+			}
+
+			{
+				float arr[3] = { LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.x,
+				LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.y,
+				LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.z };
+				ImGui::SliderFloat3("light Direction2", arr, -50000.0f, 50000.0f, "x: = %f, y: = %f,z: = %f");
+				LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.x = arr[0];
+				LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.y = arr[1];
+				LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.z = arr[2];
+
+				float arr2 = { LightManager::GetInstnace()->_lightParmas.LightInfos->range };
+				ImGui::SliderFloat("range", &arr2, -50000.0f, 50000.0f, "range: = %f" );
+				LightManager::GetInstnace()->_lightParmas.LightInfos[0].range = arr2;
+			}
+		}
 		ImGui::End();
 	}
 

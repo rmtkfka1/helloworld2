@@ -51,6 +51,8 @@ void Material::Update()
 		_params.SetInt(1, 0);
 	}
 
+	_desc.cameraPos = CameraManager::GetInstance()->_cameraPos;
+
 	core->GetConstantBuffer(CBV_REGISTER::b2)->PushData(&_desc, sizeof(_desc));
 	core->GetConstantBuffer(CBV_REGISTER::b3)->PushData(&_params, sizeof(_params));
 }

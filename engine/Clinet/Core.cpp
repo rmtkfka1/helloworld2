@@ -37,7 +37,6 @@ void Core::Init(WindowInfo info)
 	CreateConstantBuffer(CBV_REGISTER::b2, sizeof(MaterialDesc), 3000);
 	CreateConstantBuffer(CBV_REGISTER::b3, 20, 3000);
 
-
 	_tableHeap = make_unique<TableHeap>();
 	_tableHeap->Init(3000);
 
