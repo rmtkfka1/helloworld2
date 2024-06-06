@@ -1,24 +1,4 @@
-
-cbuffer TransformParams : register(b1)
-{
-    row_major matrix WorldMatrix;
-    row_major matrix ViewMatrix;
-    row_major matrix ProjectionMatrix;
-};
-
-cbuffer MATERIAL_PARAMS : register(b3)
-{
-    int int_0;
-    int int_1;
-    int int_2;
-    int int_3;
-    
-    float hit;
-    float float_1;
-    float float_2;
-    float float_3;
-};
-
+#include "Common.hlsl"
 
 struct VS_IN
 {

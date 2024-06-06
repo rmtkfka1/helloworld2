@@ -47,6 +47,9 @@
     <Filter Include="Engine\Manager">
       <UniqueIdentifier>{d28d7426-de32-4aa2-96e7-98acb50794ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource\ShaderFile\Common">
+      <UniqueIdentifier>{deec0c3e-c759-46b1-876e-202ceaa7a6d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clinet.h">
@@ -386,6 +389,9 @@
     </FxCompile>
     <FxCompile Include="..\Resources\Shader\color.hlsl">
       <Filter>Resource\ShaderFile</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\Common.hlsl">
+      <Filter>Resource\ShaderFile\Common</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -1,49 +1,7 @@
-struct MaterialDesc
-{
-    float4 ambient;
-    float4 diffuse;
-    float4 specular;
-    float4 emissive;
-};
 
-cbuffer Lightinfo : register(b0)
-{
-    float4 lightDirection;
-    float4 cameraPos;
-};
+#include "Common.hlsl"
 
-cbuffer TransformParams : register(b1)
-{
-    row_major matrix WorldMatrix;
-    row_major matrix ViewMatrix;
-    row_major matrix ProjectionMatrix;
-};
 
-cbuffer LightParams : register(b2)
-{
-    MaterialDesc lightColor;
-  
-}
-
-cbuffer MATERIAL_PARAMS : register(b3)
-{
-    int normal_on;
-    int specular_on;
-    int int_2;
-    int int_3;
-
-    float float_0;
-    float float_1;
-    float float_2;
-    float float_3;
-
-};
-
-Texture2D tex_0 : register(t0);
-Texture2D normal_texture : register(t1);
-Texture2D specular_texture : register(t2);
-
-SamplerState sam_0 : register(s0);
 
 struct VS_IN
 {
@@ -89,7 +47,7 @@ VS_OUT VS_Main(VS_IN input)
 
 float4 PS_Main(VS_OUT input) : SV_Target
 {
-    float4 color = tex_0.Sample(sam_0, input.uv);
+    float4 color = basic_texture.Sample(sam_0, input.uv);
     
     float3 normal = normalize(input.normal);
     float3 lightDir = normalize(lightDirection.xyz);

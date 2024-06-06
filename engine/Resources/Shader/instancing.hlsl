@@ -1,41 +1,38 @@
+#include "Common.hlsl"
 
 struct instanceData
 {
     row_major matrix InstnaceWorldMatrix;
 };
 
+
 struct VS_IN
 {
     float3 pos : POSITION;
     float2 uv : TEXCOORD;
+    float3 normal : NORMAL;
+    uint nInstanceID : SV_InstanceID;
 };
 
 struct VS_OUT
 {
     float4 pos : SV_Position;
     float2 uv : TEXCOORD;
+    float3 normal : NORMAL;
 
 };
     
+
 StructuredBuffer<instanceData> instanceInfo : register(t5);
 
-Texture2D tex_0 : register(t0);
-SamplerState sam_0 : register(s0);
 
-cbuffer TransformParams : register(b1)
-{
-    row_major matrix WorldMatrix;
-    row_major matrix ViewMatrix;
-    row_major matrix ProjectionMatrix;
-};
-
-
-VS_OUT VS_Main(VS_IN input, uint nInstanceID :SV_InstanceID)
+VS_OUT VS_Main(VS_IN input)
 {
     VS_OUT output = (VS_OUT) 0;
 
+  
     output.pos = float4(input.pos, 1.0f);
-    output.pos = mul(output.pos, instanceInfo[nInstanceID].InstnaceWorldMatrix);
+    output.pos = mul(output.pos, instanceInfo[input.nInstanceID].InstnaceWorldMatrix);
     output.pos = mul(output.pos, ViewMatrix);
     output.pos = mul(output.pos, ProjectionMatrix);
   
@@ -46,7 +43,7 @@ VS_OUT VS_Main(VS_IN input, uint nInstanceID :SV_InstanceID)
 
 float4 PS_Main(VS_OUT input) : SV_Target
 {
-    float4 color = tex_0.Sample(sam_0, input.uv);
+    float4 color = basic_texture.Sample(sam_0, input.uv);
     
     return color;
 }
