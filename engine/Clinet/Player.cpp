@@ -27,7 +27,7 @@ void Player::Init()
 	info.position = CameraManager::GetInstance()->_cameraPos;
 	info.direction = CameraManager::GetInstance()->_cameraLook;
 	info.lightType = static_cast<int32>(LIGHT_TYPE::SPOT_LIGHT);
-	info.attenuation = Helper::GetAttenuationCoeff(500.0f);
+	info.attenuation = Helper::GetAttenuationCoeff(5000.0f);
 	LightManager::GetInstnace()->PushLight(info);
 
 }
@@ -35,9 +35,13 @@ void Player::Init()
 void Player::Update()
 {
 	GameObject::Update();
+	vec3 direction = vec3(0, -0.1f, 0.8f);
+	direction.Normalize();
 
-	LightManager::GetInstnace()->_lightParmas.LightInfos[0].direction = CameraManager::GetInstance()->_cameraLook;
-	LightManager::GetInstnace()->_lightParmas.LightInfos[0].position = CameraManager::GetInstance()->_cameraPos;
+	LightManager::GetInstnace()->_lightParmas.LightInfos[0].direction = direction;
+	LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.x = this->_transform->GetLocalPosition().x;
+	LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.y = this->_transform->GetLocalPosition().y+10.0f;
+	LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.z = this->_transform->GetLocalPosition().z;
 	float dt = TimeManager::GetInstance()->GetDeltaTime();
 
 	{
