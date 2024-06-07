@@ -1,6 +1,6 @@
 #pragma once
 
-
+class Player;
 
 class ObjectManager
 {
@@ -14,6 +14,7 @@ public:
 
 public:
 
+	Player* player;
 
 };
 

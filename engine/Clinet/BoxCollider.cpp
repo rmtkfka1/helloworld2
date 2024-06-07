@@ -26,12 +26,7 @@ BoxCollider::~BoxCollider()
 
 void BoxCollider::Init()
 {
-	auto onwerTransform = GetOwner()->_transform;
-
-	_orginbox.Transform(_box, onwerTransform->GetMatrix());
-	_box.Orientation = Quaternion::CreateFromYawPitchRoll(onwerTransform->GetLocalRotation().x,
-		onwerTransform->GetLocalRotation().y,
-		onwerTransform->GetLocalRotation().z);
+	
 
 }
 

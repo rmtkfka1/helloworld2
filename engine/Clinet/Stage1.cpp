@@ -22,6 +22,13 @@
 #include "Player.h"
 #include "Lamp.h"
 #include "LightManager.h"
+#include "Box.h"
+#include <random>
+
+default_random_engine dre;
+uniform_int_distribution<int> uid(0, 3);
+uniform_real_distribution<float> uidZ(0, 18000.0f);
+
 Stage1::Stage1()
 {
 
@@ -54,7 +61,7 @@ void Stage1::Init()
 		player->_transform->SetLocalRotation(vec3(0, 180.0f, 0));
 		shared_ptr<BoxCollider> box = make_shared<BoxCollider>();
 		player->AddComponent(box);
-
+		ObjectManager::GetInstance()->player = player.get();
 
 		AddGameObject(player);
 	}
@@ -87,7 +94,42 @@ void Stage1::Init()
 		AddGameObject(lord);
 	}
 
+	{
 
+		for (int i = 0; i < 50; ++i)
+		{
+			int random = uid(dre);
+
+			shared_ptr<Box> box = make_shared<Box>();
+
+			shared_ptr<Model> model = Model::ReadData(L"box/box");
+			box->SetModel(model);
+
+			shared_ptr<Transform> transform = make_shared<Transform>();
+			box->SetTransform(transform);
+			if (random == 0)
+			{
+				box->_transform->SetLocalPosition(vec3(-60,0,uidZ(dre)));
+			}
+			else if (random == 1)
+			{
+				box->_transform->SetLocalPosition(vec3(-40, 0, uidZ(dre)));
+			}
+			else if (random == 2)
+			{
+				box->_transform->SetLocalPosition(vec3(-20, 0, uidZ(dre)));
+			}
+			else
+			{
+				box->_transform->SetLocalPosition(vec3(0, 0, uidZ(dre)));
+			}
+
+			box->_transform->SetLocalRotation(vec3(0, 180.0f, 0));
+
+			box->AddComponent(make_shared<BoxCollider>());
+			AddGameObject(box);
+		}
+	}
 
 
 	
@@ -101,6 +143,7 @@ void Stage1::Update()
 
 	Super::Update();
 	CameraManager::GetInstance()->Update();
+
 }
 
 void Stage1::LateUpdate() 
@@ -108,13 +151,15 @@ void Stage1::LateUpdate()
 	Super::LateUpdate();
 
 	//충돌체 업데이트
-	CollisonManager::GetInstance()->Update();
+	
 }
 
 void Stage1::Render()
 {
 	LightManager::GetInstnace()->SetData();
 	Super::Render();
+	CollisonManager::GetInstance()->Update();
+
 }
 
 void Stage1::ClearScene()

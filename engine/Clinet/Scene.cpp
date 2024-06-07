@@ -56,6 +56,7 @@ void Scene::LateUpdate()
 
 void Scene::Render()
 {
+
 	for (auto& i : _gameObjects)
 	{
 		i->Render();

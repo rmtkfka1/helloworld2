@@ -46,22 +46,13 @@ void GameObject::Init()
 
 void GameObject::Update()
 {
-	for (auto& compoent : _component)
-	{
-		compoent->Update();
-	}
-
+	
 }
 
 
 
 void GameObject::Render()
 {
-
-	for (auto& compoent : _component)
-	{
-		compoent->Render();
-	}
 
 	vector<shared_ptr<ModelMesh>>& meshData = _model->GetMeshes();
 
@@ -71,7 +62,6 @@ void GameObject::Render()
 		core->GetCmdList()->IASetVertexBuffers(0, 1, &data->meshes->GetVertexView());
 		core->GetCmdList()->IASetIndexBuffer(&data->meshes->GetIndexView());
 
-	
 		_transform->Update();
 
 		if (data->material)
@@ -81,11 +71,17 @@ void GameObject::Render()
 
 		core->GetTableHeap()->SetGraphicsRootDescriptorTable();
 		core->GetCmdList()->DrawIndexedInstanced(data->meshes->GetIndexCount(), 1, 0, 0, 0); 
-		//인덱스갯수 
-		// , 인스턴수 갯수 
-		// , 시작인덱스의 위치  ex) 1000이라고 입력시 1000번쨰 인덱스버퍼의 위치부터 데이터를 읽어 렌더링에 사용됨.
-		// , 각정점 인덱스에 더해지는값  ex) 버퍼에 메쉬 여러개를 저장해뒀을때 오프셋을 사용하여 그려줄떄 사용함 .
-		// , 인스턴스 인덱스에 더해지는값 
+	
+	}
+
+	for (auto& compoent : _component)
+	{
+		compoent->Update();
+	}
+
+	for (auto& compoent : _component)
+	{
+		compoent->Render();
 	}
 
 }

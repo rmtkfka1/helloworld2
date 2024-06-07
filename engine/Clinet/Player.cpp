@@ -5,9 +5,13 @@
 #include "LightManager.h"
 #include "Helper.h"
 #include "CameraManager.h"
-Player::Player()
+#include "SceneManger.h"
+#include "Scene.h"
+#include "BaseCollider.h"
+#include "CollisonManager.h"
+Player::Player() :GameObject(GAMEOBJECT_TYPE::Player)
 {
-	// -30  -10  10 30 
+	
 }
 
 Player::~Player()
@@ -18,7 +22,6 @@ Player::~Player()
 void Player::Init()
 {
 	GameObject::Init();
-
 
 	LightInfo info;
 	info.color.ambient = vec4(0, 0, 0, 0);
@@ -88,4 +91,20 @@ void Player::Update()
 void Player::Render()
 {
 	GameObject::Render();
+}
+
+void Player::OnComponentBeginOverlap(shared_ptr<BaseCollider> collider, shared_ptr<BaseCollider> other)
+{
+	if (other->GetOwner()->GetGameObjectType() == GAMEOBJECT_TYPE::Box)
+	{
+		SceneManger::GetInstance()->GetCurrentScene()->ReserveDeleteGameObject(other->GetOwner());
+		CollisonManager::GetInstance()->RemoveCollider(other);
+		this->_speed = 0;
+		CameraManager::GetInstance()->_animationflag = true;
+	}
+}
+
+void Player::OnComponentEndOverlap(shared_ptr<BaseCollider> collider, shared_ptr<BaseCollider> other)
+{
+
 }

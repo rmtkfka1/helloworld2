@@ -22,6 +22,8 @@ public:
 	void Init();
 	void Update();
 	void MouseUpdate();
+	void Animation();
+
 
 
 public:
@@ -57,6 +59,8 @@ public:
 	vec3 _cameraLook{};
 	vec3 _cameraUp{};
 
-
+	vec3 _shake = { 0,0,0 };
+	bool _animationflag = false;
+	float _elaspedTime = 0;
 };
 
