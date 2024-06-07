@@ -29,9 +29,9 @@ cbuffer LightParams :register(b0)
 {
     LightInfo g_light[100];
     int g_lightCount;
-    float range;
-    float angle;
-    int padding3;
+    float cutoff;
+    int padding1;
+    int padding2;
 };
 cbuffer TransformParams : register(b1)
 {

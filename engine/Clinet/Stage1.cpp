@@ -39,6 +39,25 @@ void Stage1::Init()
 
 
 	CameraManager::GetInstance()->Init();
+	
+
+	{
+		shared_ptr<Player> player = make_shared<Player>();
+
+		shared_ptr<Model> model = Model::ReadData(L"car/car");
+		player->SetModel(model);
+
+		shared_ptr<Transform> transform = make_shared<Transform>();
+		player->SetTransform(transform);
+		player->_transform->SetLocalScale(vec3(0.1f, 0.1f, 0.1f));
+		player->_transform->SetLocalPosition(vec3(-30.0f, 2.0f, 0));
+		player->_transform->SetLocalRotation(vec3(0, 180.0f, 0));
+		shared_ptr<BoxCollider> box = make_shared<BoxCollider>();
+		player->AddComponent(box);
+
+
+		AddGameObject(player);
+	}
 
 	{
 
@@ -69,23 +88,7 @@ void Stage1::Init()
 	}
 
 
-	{
-		shared_ptr<Player> player = make_shared<Player>();
 
-		shared_ptr<Model> model = Model::ReadData(L"car/car");
-		player->SetModel(model);
-
-		shared_ptr<Transform> transform = make_shared<Transform>();
-		player->SetTransform(transform);
-		player->_transform->SetLocalScale(vec3(0.1f, 0.1f, 0.1f));
-		player->_transform->SetLocalPosition(vec3(-30.0f, 2.0f, 0));
-		player->_transform->SetLocalRotation(vec3(0, 180.0f, 0));
-		shared_ptr<BoxCollider> box = make_shared<BoxCollider>();
-		player->AddComponent(box);
-
-
-		AddGameObject(player);
-	}
 
 	
 

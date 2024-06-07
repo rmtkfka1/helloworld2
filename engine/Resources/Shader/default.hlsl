@@ -37,6 +37,7 @@ VS_OUT VS_Main(VS_IN input)
     output.pos = mul(output.pos, ProjectionMatrix);
     
     output.uv = input.uv;
+    
     output.WorldPos = mul(float4(input.pos, 1.0f), WorldMatrix);
     output.normal = normalize(mul(float4(input.normal, 0.0f), WorldMatrix).xyz);
     output.tangent = normalize(mul(float4(input.tangent, 0.0f), WorldMatrix).xyz);
