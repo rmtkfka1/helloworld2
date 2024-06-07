@@ -19,12 +19,7 @@ void Player::Init()
 	GameObject::Init();
 
 	
-	LightInfo info;
-	info.position = this->_transform->GetLocalPosition();
-	info.lightType = static_cast<int32>(LIGHT_TYPE::SPOT_LIGHT);
-	info.attenuation = Helper::GetAttenuationCoeff(2000.0f);
-	info.direction = vec3(0, 0, -1.0f);
-	LightManager::GetInstnace()->PushLight(info);
+	
 }
 
 void Player::Update()

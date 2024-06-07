@@ -13,7 +13,7 @@ enum class LIGHT_TYPE : uint8
 
 struct LightColor
 {
-	vec4	diffuse =vec4(1.0f,1.0f, 1.0f, 1.0f);
+	vec4	diffuse =vec4(1.0f, 0.747f, 0, 1.0f);
 	vec4	ambient = vec4(0, 0, 0, 0);
 	vec4	specular = vec4(1.0f, 0.647f, 0.0f, 1.0f);
 };

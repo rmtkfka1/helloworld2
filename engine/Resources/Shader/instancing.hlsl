@@ -38,8 +38,8 @@ VS_OUT VS_Main(VS_IN input, uint nInstanceID : SV_InstanceID)
     output.pos = mul(output.pos, ProjectionMatrix);
     
     output.Worldpos = mul(float4(input.pos, 1.0f), instanceInfo[nInstanceID].InstnaceWorldMatrix);
-    
-    output.normal = input.normal;
+    output.normal = mul(float4(input.normal, 0.0f), instanceInfo[nInstanceID].InstnaceWorldMatrix);
+
     output.uv = input.uv;
     
     return output;

@@ -37,6 +37,8 @@ void Lamp::Init()
 
 	_buffer->PushData((_data.data()));
 
+	/////////////////////////////////////////////////////////////
+	auto attenu = Helper::GetAttenuationCoeff(2000.0f);
 	for (int i = 0; i < InstanceCount; ++i)
 	{
 		LightInfo info;
@@ -44,7 +46,7 @@ void Lamp::Init()
 		info.position.y = _data[i].worldmat.Translation().y +100.0f;
 		info.position.z = _data[i].worldmat.Translation().z ;
 		info.lightType = static_cast<int32>(LIGHT_TYPE::POINT_LIGHT);
-		info.attenuation = Helper::GetAttenuationCoeff(2000.0f);
+		info.attenuation = attenu;
 		LightManager::GetInstnace()->PushLight(info);
 	}
 

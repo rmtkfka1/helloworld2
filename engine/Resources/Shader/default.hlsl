@@ -38,11 +38,10 @@ VS_OUT VS_Main(VS_IN input)
     
     output.uv = input.uv;
     output.WorldPos = mul(float4(input.pos, 1.0f), WorldMatrix);
-    
-
     output.normal = normalize(mul(float4(input.normal, 0.0f), WorldMatrix).xyz);
     output.tangent = normalize(mul(float4(input.tangent, 0.0f), WorldMatrix).xyz);
     output.binormal = normalize(cross(output.tangent, output.normal));
+    
     
     return output;
 }

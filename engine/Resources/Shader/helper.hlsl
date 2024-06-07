@@ -37,24 +37,16 @@ LightColor CalculateLightColor(int lightIndex, float3 normal, float3 worldPos)
         float3 distPoly = float3(1.0, dist, dist * dist);
         
         float attenuation = 1.0 / dot(distPoly, g_light[lightIndex].attenuation);
-        
-        color.ambient = g_light[lightIndex].lightColor.ambient;
-        
         float3 lightDir = normalize(g_light[lightIndex].position.xyz - worldPos);
-        
-        color.diffuse = g_light[lightIndex].lightColor.diffuse * saturate(dot(lightDir, normal));
-        
-        
         float3 viewDir = normalize(cameraPos.xyz - worldPos);
         float3 reflectDir = reflect(-lightDir, normal);
         float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 500.0f);
         float specularPower = 0.0f;
+    
+        color.ambient = g_light[lightIndex].lightColor.ambient * attenuation;
+        color.diffuse = g_light[lightIndex].lightColor.diffuse * saturate(dot(lightDir, normal)) * attenuation;
+        color.specular = specularPower * spec * g_light[lightIndex].lightColor.specular * attenuation;
         
-        color.specular = specularPower*  spec * g_light[lightIndex].lightColor.specular;
-        
-        color.diffuse *= attenuation;
-        color.ambient *= attenuation;
-        color.specular *= attenuation;
     }
     else if (g_light[lightIndex].lightType == 2)
     {
@@ -68,7 +60,7 @@ LightColor CalculateLightColor(int lightIndex, float3 normal, float3 worldPos)
         {
             float halfAngle = angle / 2;
 
-            float3 viewLightVec = worldPos - g_light[lightIndex].position.xyz;
+            float3 viewLightVec = worldPos - cameraPos.xyz;
             float3 viewCenterLightDir = normalize(float4(g_light[lightIndex].direction));
 
             float centerDist = dot(viewLightVec, viewCenterLightDir);
@@ -82,7 +74,6 @@ LightColor CalculateLightColor(int lightIndex, float3 normal, float3 worldPos)
                 distanceRatio = 0.f;
             else // 거리에 따라 적절히 세기를 조절
                 distanceRatio = saturate(1.f - pow(centerDist / range, 2));
-            
             
             float3 viewDir = normalize(cameraPos.xyz - worldPos);
             float3 reflectDir = reflect(-LightDir, normal);
