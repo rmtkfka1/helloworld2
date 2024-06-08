@@ -7,6 +7,13 @@ enum class PROJECTION_TYPE
 	ORTHOGRAPHIC,
 };
 
+enum CameraType
+{
+	CameraType1,
+	CameraType2,
+	CameraType3,
+	CameraType4,
+};
 
 class CameraManager
 {
@@ -62,5 +69,7 @@ public:
 	vec3 _shake = { 0,0,0 };
 	bool _animationflag = false;
 	float _elaspedTime = 0;
+
+	CameraType _cameraType= CameraType1;
 };
 

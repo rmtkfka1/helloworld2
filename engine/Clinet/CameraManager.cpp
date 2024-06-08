@@ -45,22 +45,37 @@ void CameraManager::Update()
     {
         if (KeyManager::GetInstance()->GetButtonDown(KEY_TYPE::Q))
         {
-            flag = !flag;
+            _cameraType = static_cast<CameraType>((static_cast<int>(_cameraType) + 1) % 4);
         }
 
-        if (flag)
+        if (_cameraType==0)
         {
             _cameraLook = vec3(0, -0.5f, 1.0f);
             _cameraPos.x = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().x;
             _cameraPos.y = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().y + 300.0f;
             _cameraPos.z = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().z - 600.0f;
         }
-        else
+        else if(_cameraType==1)
         {
             _cameraLook = vec3(0.4f, -0.5f, -0.5f);
             _cameraPos.x = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().x - 300.0f;
             _cameraPos.y = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().y + 600.0f;
             _cameraPos.z = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().z + 500.0f;
+        }
+        else if (_cameraType == 2)
+        {
+            _cameraLook = vec3(0, 0, 1.0f);
+            _cameraPos.x = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().x;
+            _cameraPos.y = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().y;
+            _cameraPos.z = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().z + 30.0f;
+        }
+
+        else
+        {
+            _cameraLook = vec3(0, 0, -1.0f);
+            _cameraPos.x = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().x;
+            _cameraPos.y = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().y;
+            _cameraPos.z = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().z - 50.0f;
         }
 
         // 뷰 행렬 업데이트
