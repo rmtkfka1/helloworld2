@@ -55,29 +55,6 @@ void ImguiManager::Render()
 		ImGui::Text("x: = %f,y: = %f,z: = %f", _temp.x, _temp.y ,_temp.z);
 		ImGui::Text("x: = %f,y: = %f,z: = %f", _temp2.x, _temp2.y, _temp2.z);
 		
-		if (ImGui::CollapsingHeader("light",ImGuiTreeNodeFlags_DefaultOpen))
-		{
-			/*{
-				float arr[3] = { LightManager::GetInstnace()->_lightParmas.LightInfos[0].direction.x,
-				LightManager::GetInstnace()->_lightParmas.LightInfos[0].direction.y,
-				LightManager::GetInstnace()->_lightParmas.LightInfos[0].direction.z };
-				ImGui::SliderFloat3("light Direction", arr, -1.0f, 1.0f, "x: = %f,y: = %f,z: = %f");
-				LightManager::GetInstnace()->_lightParmas.LightInfos[0].direction.x = arr[0];
-				LightManager::GetInstnace()->_lightParmas.LightInfos[0].direction.y = arr[1];
-				LightManager::GetInstnace()->_lightParmas.LightInfos[0].direction.z = arr[2];
-			}*/
-
-			{
-				float arr[3] = { LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.x,
-				LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.y,
-				LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.z };
-				ImGui::SliderFloat3("light Direction2", arr, -50000.0f, 0, "x: = %f, y: = %f,z: = %f");
-				LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.x = arr[0];
-				LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.y = arr[1];
-				LightManager::GetInstnace()->_lightParmas.LightInfos[0].position.z = arr[2];
-
-			}
-		}
 		ImGui::End();
 	}
 
