@@ -53,7 +53,7 @@ void ImguiManager::Render()
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 
 		ImGui::Text("x: = %f,y: = %f,z: = %f", _temp.x, _temp.y ,_temp.z);
-	
+		ImGui::Text("x: = %f,y: = %f,z: = %f", _temp2.x, _temp2.y, _temp2.z);
 		
 		if (ImGui::CollapsingHeader("light",ImGuiTreeNodeFlags_DefaultOpen))
 		{

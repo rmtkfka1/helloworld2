@@ -53,7 +53,7 @@ public:
 	static Matrix S_MatView;
 	static Matrix S_MatProjection;
 
-	bool flag = false;
+	bool flag = true;
 public:
 	vec3 _cameraPos{};
 	vec3 _cameraLook{};

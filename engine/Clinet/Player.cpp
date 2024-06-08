@@ -30,7 +30,7 @@ void Player::Init()
 	info.position = CameraManager::GetInstance()->_cameraPos;
 	info.direction = CameraManager::GetInstance()->_cameraLook;
 	info.lightType = static_cast<int32>(LIGHT_TYPE::SPOT_LIGHT);
-	info.attenuation = Helper::GetAttenuationCoeff(5000.0f);
+	info.attenuation = Helper::GetAttenuationCoeff(10000.0f);
 	LightManager::GetInstnace()->PushLight(info);
 
 }
@@ -49,13 +49,12 @@ void Player::Update()
 
 	{
 		//스피드증가, 움직임
-		if (_speed < 300.0f) {
+		if (_speed < 400.0f) {
 			_speed += dt * 30;
 		}
 
 		vec3 now = _transform->GetLocalPosition();
 		_transform->SetLocalPosition(vec3(now.x, now.y, now.z + _speed * dt));
-
 
 	}
 
@@ -83,7 +82,13 @@ void Player::Update()
 
 		}
 
+	}
+	{
 
+		if (_transform->GetLocalPosition().z > 19000.0f)
+		{
+			SceneManger::GetInstance()->GetCurrentScene()->_sceneEnd = true;
+		}
 	}
 
 }
@@ -101,6 +106,11 @@ void Player::OnComponentBeginOverlap(shared_ptr<BaseCollider> collider, shared_p
 		CollisonManager::GetInstance()->RemoveCollider(other);
 		this->_speed = 0;
 		CameraManager::GetInstance()->_animationflag = true;
+	}
+
+	if (other->GetOwner()->GetGameObjectType() == GAMEOBJECT_TYPE::Enemy)
+	{
+		SceneManger::GetInstance()->GetCurrentScene()->_sceneEnd = true;
 	}
 }
 

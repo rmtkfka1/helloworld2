@@ -214,6 +214,12 @@
     <ClInclude Include="Box.h">
       <Filter>Contents\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>Contents\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -362,6 +368,12 @@
     </ClCompile>
     <ClCompile Include="Box.cpp">
       <Filter>Contents\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>Contents\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScene.cpp">
+      <Filter>Contents\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

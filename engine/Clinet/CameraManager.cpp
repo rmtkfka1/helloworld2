@@ -13,7 +13,7 @@
 
 std::default_random_engine generator;
 std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
-using namespace DirectX::SimpleMath;
+
 
 Matrix CameraManager::S_MatView;
 Matrix CameraManager::S_MatProjection;
@@ -31,29 +31,40 @@ void CameraManager::Init()
     GetWindowRect(GetForegroundWindow(), &_rect);
     _centerScreen = { (_rect.right + _rect.left) / 2, (_rect.bottom + _rect.top) / 2 };
     _mousePos = _centerScreen;
-    _cameraPos = vec3(0, 0, 0);
-    _cameraLook = vec3(0, 0, 1.0f); // 기본값을 바라보는 방향으로 설정 (0, 0, -1)
+
     _cameraUp = vec3(0, 1.0f, 0);
 }
 
 void CameraManager::Update()
 {
 
-    MouseUpdate();
+    //MouseUpdate();
     Animation();
 
-    if (KeyManager::GetInstance()->GetButtonDown(KEY_TYPE::Q)) {
-        flag = !flag;
-    }
-
-    if (flag)
+    if (SceneManger::GetInstance()->GetSceneType() == SceneType::STAGE1)
     {
-        _cameraPos.x = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().x;
-        _cameraPos.y = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().y + 100.0f;
-        _cameraPos.z = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().z - 300.0f;
+        if (KeyManager::GetInstance()->GetButtonDown(KEY_TYPE::Q))
+        {
+            flag = !flag;
+        }
+
+        if (flag)
+        {
+            _cameraLook = vec3(0, -0.5f, 1.0f);
+            _cameraPos.x = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().x;
+            _cameraPos.y = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().y + 300.0f;
+            _cameraPos.z = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().z - 600.0f;
+        }
+        else
+        {
+            _cameraLook = vec3(0.4f, -0.5f, -0.5f);
+            _cameraPos.x = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().x - 300.0f;
+            _cameraPos.y = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().y + 600.0f;
+            _cameraPos.z = ObjectManager::GetInstance()->player->_transform->GetLocalPosition().z + 500.0f;
+        }
 
         // 뷰 행렬 업데이트
-        S_MatView = DirectX::XMMatrixLookToLH(_cameraPos +_shake, _cameraLook, _cameraUp);
+        S_MatView = DirectX::XMMatrixLookToLH(_cameraPos + _shake, _cameraLook, _cameraUp);
 
         // 프로젝션 행렬 업데이트
         if (_type == PROJECTION_TYPE::PERSPECTIVE)
@@ -67,37 +78,12 @@ void CameraManager::Update()
         ImguiManager::GetInstance()->_temp = _cameraPos;
     }
 
+
     else
     {
-        // 회전 행렬 생성 및 카메라 방향 벡터 업데이트
-        Matrix rotationMatrix = Matrix::CreateRotationX(XMConvertToRadians(_cameraPitch));
-        rotationMatrix *= Matrix::CreateRotationY(XMConvertToRadians(_cameraYaw));
-        _cameraLook = Vector3::TransformNormal(vec3(0, 0, 1.0f), rotationMatrix);
+        _cameraLook = vec3(0, 0, 1.0f);
+        _cameraPos = vec3(200.0f, 100.0f, -1000.0f);
 
-        // 이동 처리
-        float speed = 1000.0f * TimeManager::GetInstance()->GetDeltaTime();
-
-        if (KeyManager::GetInstance()->GetButton(KEY_TYPE::W))
-        {
-            _cameraPos += _cameraLook * speed;
-        }
-        if (KeyManager::GetInstance()->GetButton(KEY_TYPE::S))
-        {
-            _cameraPos -= _cameraLook * speed;
-        }
-
-        vec3 _cameraRight = -_cameraLook.Cross(_cameraUp);
-
-        if (KeyManager::GetInstance()->GetButton(KEY_TYPE::D))
-        {
-            _cameraPos += _cameraRight * speed;
-        }
-        if (KeyManager::GetInstance()->GetButton(KEY_TYPE::A))
-        {
-            _cameraPos -= _cameraRight * speed;
-        }
-
-        // 뷰 행렬 업데이트
         S_MatView = DirectX::XMMatrixLookToLH(_cameraPos, _cameraLook, _cameraUp);
 
         // 프로젝션 행렬 업데이트

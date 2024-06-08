@@ -26,5 +26,9 @@ protected:
 	queue<shared_ptr<GameObject>> _reserveAddQueue;
 	queue<shared_ptr<GameObject>> _reserveDeleteQueue;
 	
+public:
+
+	bool _sceneEnd = false;
+
 };
 

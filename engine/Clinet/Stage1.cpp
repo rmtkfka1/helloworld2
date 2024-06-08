@@ -24,6 +24,7 @@
 #include "LightManager.h"
 #include "Box.h"
 #include <random>
+#include "Ghost.h"
 
 default_random_engine dre;
 uniform_int_distribution<int> uid(0, 3);
@@ -68,6 +69,21 @@ void Stage1::Init()
 
 	{
 
+		shared_ptr<Ghost> lord = make_shared<Ghost>();
+
+		shared_ptr<Model> model = Model::ReadData(L"horror/horror");
+		lord->SetModel(model);
+
+		shared_ptr<Transform> transform = make_shared<Transform>();
+		lord->SetTransform(transform);
+		lord->_transform->SetLocalRotation(vec3(0, 180.0f, 0));
+		lord->_transform->SetLocalPosition(vec3(0, 0, -2000.0f));
+		lord->AddComponent(make_shared<BoxCollider>());
+		AddGameObject(lord);
+	}
+
+	{
+
 		shared_ptr<Lamp> lord = make_shared<Lamp>();
 
 		shared_ptr<Model> model = Model::ReadData(L"lamp/lamp");
@@ -93,6 +109,7 @@ void Stage1::Init()
 		lord->SetTransform(transform);
 		AddGameObject(lord);
 	}
+
 
 	{
 
@@ -165,6 +182,11 @@ void Stage1::Render()
 void Stage1::ClearScene()
 {
 	Super::ClearScene();
+
+	if (_sceneEnd)
+	{
+		SceneManger::GetInstance()->ChangeScene(SceneType::STARTSCENE);
+	}
 
 }
 

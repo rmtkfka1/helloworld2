@@ -14,7 +14,7 @@ void Game::Init(WindowInfo info)
 	_info = info;
 
 	core->Init(_info);
-	SceneManger::GetInstance()->ChangeScene(SceneType::STAGE1);
+	SceneManger::GetInstance()->ChangeScene(SceneType::STARTSCENE);
 
 }
 

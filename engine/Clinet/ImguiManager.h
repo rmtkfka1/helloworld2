@@ -25,7 +25,7 @@ public:
 
 public:
 	vec3 _temp{};
-
+	vec3 _temp2{};
 
 
 

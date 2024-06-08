@@ -38,10 +38,12 @@ void Lamp::Init()
 	_buffer->PushData((_data.data()));
 
 	/////////////////////////////////////////////////////////////
-	auto attenu = Helper::GetAttenuationCoeff(500.0f);
+	auto attenu = Helper::GetAttenuationCoeff(1000.0f);
+
 	for (int i = 0; i < InstanceCount; ++i)
 	{
 		LightInfo info;
+		info.color.ambient = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 		info.position.x = _data[i].worldmat.Translation().x;
 		info.position.y = _data[i].worldmat.Translation().y +100.0f;
 		info.position.z = _data[i].worldmat.Translation().z ;
