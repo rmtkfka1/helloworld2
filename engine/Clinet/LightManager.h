@@ -37,6 +37,7 @@ class LightManager
 {
 
 public:
+
 	static LightManager* GetInstnace()
 	{
 		static LightManager Manager;

@@ -19,7 +19,7 @@ void CollisonManager::Init()
 void CollisonManager::Update()
 {
 	CheckObjectCollusion();
-	CheckRayCollusion();
+
 }
 
 void CollisonManager::Clear()
@@ -31,43 +31,40 @@ void CollisonManager::CheckObjectCollusion()
 {
 	vector<	shared_ptr<BaseCollider>> colliders = _colliders;
 
-	for (int32 i = 0; i < colliders.size(); i++)
+	shared_ptr<BaseCollider> src = colliders[0];
+	
+	for (int32 i = 1; i < colliders.size(); i++)
 	{
-		for (int32 j = i + 1; j < colliders.size(); j++)
+		shared_ptr<BaseCollider> dest = colliders[i];
+
+		if (src == nullptr || dest == nullptr)
 		{
-			shared_ptr<BaseCollider> src = colliders[i];
-			shared_ptr<BaseCollider> dest = colliders[j];
+			return;
+		}
 
-
-			if (src == nullptr || dest == nullptr)
+		if (src->CheckCollusion(dest))
+		{
+			if (src->_collisionMap.contains(dest.get()) == false)
 			{
-				return;
-			}
-
-
-			if (src->CheckCollusion(dest))
-			{
-				if (src->_collisionMap.contains(dest.get()) == false)
-				{
-					src->GetOwner()->OnComponentBeginOverlap(src, dest);
-					dest->GetOwner()->OnComponentBeginOverlap(dest, src);
-					src->_collisionMap.insert(dest.get());
-					dest->_collisionMap.insert(src.get());
-				}
-			}
-
-			else
-			{
-				if (src->_collisionMap.contains(dest.get()))
-				{
-					src->GetOwner()->OnComponentEndOverlap(src, dest);
-					dest->GetOwner()->OnComponentEndOverlap(dest, src);
-					src->_collisionMap.erase(dest.get());
-					dest->_collisionMap.erase(src.get());
-				}
+				src->GetOwner()->OnComponentBeginOverlap(src, dest);
+				dest->GetOwner()->OnComponentBeginOverlap(dest, src);
+				src->_collisionMap.insert(dest.get());
+				dest->_collisionMap.insert(src.get());
 			}
 		}
-	}
+
+		else
+		{
+			if (src->_collisionMap.contains(dest.get()))
+			{
+				src->GetOwner()->OnComponentEndOverlap(src, dest);
+				dest->GetOwner()->OnComponentEndOverlap(dest, src);
+				src->_collisionMap.erase(dest.get());
+				dest->_collisionMap.erase(src.get());
+			}
+		}
+	};
+	
 
 }
 

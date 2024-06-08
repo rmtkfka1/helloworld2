@@ -16,5 +16,4 @@ void LightManager::PushLight(LightInfo info)
 void LightManager::SetData()
 {
 	core->GetConstantBuffer(CBV_REGISTER::b0)->SetData(&_lightParmas, sizeof(LightParams));
-
 }

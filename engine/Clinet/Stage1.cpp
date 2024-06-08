@@ -37,7 +37,7 @@ Stage1::Stage1()
 
 Stage1::~Stage1()
 {
-
+	LightManager::GetInstnace()->_lightParmas.lightCount = 0;
 	CollisonManager::GetInstance()->Clear();
 
 }
@@ -113,7 +113,7 @@ void Stage1::Init()
 
 	{
 
-		for (int i = 0; i < 50; ++i)
+		for (int i = 0; i < 150; ++i)
 		{
 			int random = uid(dre);
 

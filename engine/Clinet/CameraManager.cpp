@@ -149,6 +149,7 @@ void CameraManager::Animation()
     {
         _animationflag = false;
         _elaspedTime = 0;
+        _shake = vec3(0, 0, 0);
     }
 
     if (_animationflag)
